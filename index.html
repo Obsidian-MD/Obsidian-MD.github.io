@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#08060d">
+
+<title>Obsidian Bot</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:
+    radial-gradient(circle at 50% -10%,rgba(124,58,237,.28),transparent 35%),
+    #08060d;
+  color:#fff;
+  overflow-x:hidden;
+}
+
+a{
+  text-decoration:none;
+  color:inherit;
+}
+
+.container{
+  width:min(1100px,92%);
+  margin:auto;
+}
+
+/* HEADER */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  backdrop-filter:blur(18px);
+  background:rgba(8,6,13,.78);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.nav{
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:20px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.logo-icon{
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#8b5cf6,#5b21b6);
+  box-shadow:0 0 25px rgba(139,92,246,.35);
+}
+
+.nav-links{
+  display:flex;
+  gap:25px;
+  color:#aaa;
+  font-size:14px;
+}
+
+.nav-links a:hover{
+  color:#fff;
+}
+
+/* HERO */
+
+.hero{
+  min-height:650px;
+  display:flex;
+  align-items:center;
+  text-align:center;
+  position:relative;
+}
+
+.hero-content{
+  width:100%;
+  max-width:850px;
+  margin:auto;
+}
+
+.badge{
+  display:inline-block;
+  padding:8px 14px;
+  border:1px solid rgba(139,92,246,.35);
+  border-radius:999px;
+  color:#c4b5fd;
+  background:rgba(139,92,246,.08);
+  font-size:13px;
+  margin-bottom:25px;
+}
+
+.hero h1{
+  font-size:clamp(45px,8vw,85px);
+  line-height:.95;
+  letter-spacing:-4px;
+  margin-bottom:25px;
+}
+
+.gradient{
+  background:linear-gradient(90deg,#fff,#c4b5fd,#8b5cf6);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.hero p{
+  max-width:650px;
+  margin:auto;
+  color:#aaa;
+  font-size:18px;
+  line-height:1.7;
+}
+
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin-top:35px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  padding:15px 23px;
+  border-radius:12px;
+  font-weight:700;
+  font-size:14px;
+  transition:.25s;
+  display:inline-block;
+}
+
+.btn-primary{
+  background:linear-gradient(135deg,#8b5cf6,#6d28d9);
+  box-shadow:0 10px 35px rgba(109,40,217,.25);
+}
+
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:0 15px 45px rgba(109,40,217,.4);
+}
+
+.btn-secondary{
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.03);
+  color:#ddd;
+}
+
+.btn-secondary:hover{
+  background:rgba(255,255,255,.07);
+}
+
+/* SECTION */
+
+section{
+  padding:90px 0;
+}
+
+.section-title{
+  text-align:center;
+  margin-bottom:45px;
+}
+
+.section-title span{
+  color:#8b5cf6;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+
+.section-title h2{
+  font-size:38px;
+  margin-top:10px;
+}
+
+.section-title p{
+  color:#888;
+  margin-top:12px;
+}
+
+/* FEATURES */
+
+.features{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.card{
+  padding:28px;
+  border:1px solid rgba(255,255,255,.07);
+  background:rgba(255,255,255,.025);
+  border-radius:18px;
+  transition:.25s;
+}
+
+.card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(139,92,246,.3);
+  background:rgba(139,92,246,.04);
+}
+
+.icon{
+  width:45px;
+  height:45px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(139,92,246,.12);
+  color:#a78bfa;
+  font-size:21px;
+  margin-bottom:20px;
+}
+
+.card h3{
+  margin-bottom:10px;
+}
+
+.card p{
+  color:#888;
+  line-height:1.6;
+  font-size:14px;
+}
+
+/* PLANOS */
+
+.plans{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.plan{
+  position:relative;
+  padding:30px;
+  border-radius:20px;
+  background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.08);
+  transition:.25s;
+}
+
+.plan:hover{
+  transform:translateY(-5px);
+  border-color:rgba(139,92,246,.45);
+}
+
+.plan.featured{
+  border-color:rgba(139,92,246,.55);
+  box-shadow:0 0 45px rgba(109,40,217,.12);
+}
+
+.plan-badge{
+  position:absolute;
+  top:18px;
+  right:18px;
+  padding:5px 9px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:bold;
+  background:#7c3aed;
+}
+
+.plan h3{
+  font-size:22px;
+  margin-bottom:8px;
+}
+
+.duration{
+  color:#888;
+  font-size:13px;
+}
+
+.price{
+  margin:25px 0;
+}
+
+.price strong{
+  font-size:42px;
+}
+
+.price span{
+  color:#888;
+  font-size:13px;
+}
+
+.plan ul{
+  list-style:none;
+  margin-bottom:25px;
+}
+
+.plan li{
+  color:#aaa;
+  font-size:14px;
+  padding:9px 0;
+  border-bottom:1px solid rgba(255,255,255,.04);
+}
+
+.plan li::before{
+  content:"✓";
+  color:#a78bfa;
+  margin-right:8px;
+}
+
+.plan-button{
+  display:block;
+  text-align:center;
+  padding:14px;
+  border-radius:11px;
+  background:rgba(139,92,246,.12);
+  border:1px solid rgba(139,92,246,.25);
+  font-weight:700;
+  font-size:14px;
+  transition:.2s;
+}
+
+.plan-button:hover{
+  background:#7c3aed;
+  border-color:#7c3aed;
+}
+
+/* ARCADE */
+
+.games{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+
+.game{
+  padding:18px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.06);
+  background:rgba(255,255,255,.025);
+  text-align:center;
+  color:#aaa;
+  font-size:13px;
+}
+
+.game:hover{
+  color:#fff;
+  border-color:rgba(139,92,246,.3);
+}
+
+/* CTA */
+
+.cta{
+  text-align:center;
+  padding:70px 25px;
+  border-radius:25px;
+  border:1px solid rgba(139,92,246,.2);
+  background:
+    radial-gradient(circle at center,rgba(124,58,237,.15),transparent 65%),
+    rgba(255,255,255,.02);
+}
+
+.cta h2{
+  font-size:38px;
+  margin-bottom:15px;
+}
+
+.cta p{
+  color:#888;
+  margin-bottom:25px;
+}
+
+/* FOOTER */
+
+footer{
+  padding:40px 0;
+  border-top:1px solid rgba(255,255,255,.06);
+  color:#666;
+  text-align:center;
+  font-size:13px;
+}
+
+footer strong{
+  color:#aaa;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+  .nav-links{
+    display:none;
+  }
+
+  .hero{
+    min-height:580px;
+  }
+
+  .hero h1{
+    letter-spacing:-2px;
+  }
+
+  .features,
+  .plans{
+    grid-template-columns:1fr;
+  }
+
+  .games{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  section{
+    padding:65px 0;
+  }
+
+  .section-title h2{
+    font-size:30px;
+  }
+
+  .cta h2{
+    font-size:30px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+
+    <a href="#" class="logo">
+      <span class="logo-icon">◈</span>
+      OBSIDIAN
+    </a>
+
+    <nav class="nav-links">
+      <a href="#recursos">Recursos</a>
+      <a href="#planos">Planos</a>
+      <a href="#arcade">Arcade</a>
+    </nav>
+
+  </div>
+</header>
+
+
+<main>
+
+<!-- HERO -->
+
+<section class="hero">
+
+  <div class="container hero-content">
+
+    <div class="badge">
+      OBSIDIAN BOT • INTELIGÊNCIA PARA SEU GRUPO
+    </div>
+
+    <h1>
+      Seu grupo.<br>
+      <span class="gradient">Mais poderoso.</span>
+    </h1>
+
+    <p>
+      Proteção, administração, inteligência artificial,
+      diversão e muito mais em um único bot para WhatsApp.
+    </p>
+
+    <div class="buttons">
+
+      <a href="#planos" class="btn btn-primary">
+        Conhecer os planos
+      </a>
+
+      <a href="#recursos" class="btn btn-secondary">
+        Ver recursos
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- RECURSOS -->
+
+<section id="recursos">
+
+  <div class="container">
+
+    <div class="section-title">
+      <span>Recursos</span>
+      <h2>Tudo em um só lugar</h2>
+      <p>Ferramentas feitas para deixar seu grupo mais completo.</p>
+    </div>
+
+    <div class="features">
+
+      <div class="card">
+        <div class="icon">🛡️</div>
+        <h3>Proteção</h3>
+        <p>
+          Anti-fake, anti-link, lista negra,
+          proteção contra spam e muito mais.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="icon">⚙️</div>
+        <h3>Administração</h3>
+        <p>
+          Ferramentas para facilitar o trabalho
+          dos administradores do grupo.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🤖</div>
+        <h3>Inteligência Artificial</h3>
+        <p>
+          Interações inteligentes e recursos
+          de IA diretamente no WhatsApp.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🎙️</div>
+        <h3>Voz & TTS</h3>
+        <p>
+          Transforme textos em voz e interaja
+          com diferentes recursos de áudio.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🎮</div>
+        <h3>Jogos</h3>
+        <p>
+          Diversos jogos para deixar o grupo
+          muito mais divertido.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🏆</div>
+        <h3>Ranking</h3>
+        <p>
+          Pontuação, níveis, rankings e sistemas
+          de recompensa para os participantes.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PLANOS -->
+
+<section id="planos">
+
+  <div class="container">
+
+    <div class="section-title">
+      <span>Planos</span>
+      <h2>Escolha seu nível</h2>
+      <p>Todos os planos possuem validade de 30 dias.</p>
+    </div>
+
+    <div class="plans">
+
+      <!-- BRONZE -->
+
+      <div class="plan">
+
+        <h3>🥉 Bronze</h3>
+
+        <div class="duration">
+          30 dias
+        </div>
+
+        <div class="price">
+          <strong>R$15</strong>
+          <span>/ 30 dias</span>
+        </div>
+
+        <ul>
+          <li>Recursos essenciais</li>
+          <li>Proteção básica</li>
+          <li>Comandos selecionados</li>
+          <li>Jogos disponíveis</li>
+        </ul>
+
+        <a
+          class="plan-button"
+          href="https://wa.me/5598920025496?text=Fiquei%20interessado%20no%20Plano%20Bronze.%20Como%20fa%C3%A7o%20para%20contratar%3F"
+          target="_blank"
+          rel="noopener"
+        >
+          Quero o Bronze
+        </a>
+
+      </div>
+
+
+      <!-- PRATA -->
+
+      <div class="plan featured">
+
+        <div class="plan-badge">
+          MAIS POPULAR
+        </div>
+
+        <h3>🥈 Prata</h3>
+
+        <div class="duration">
+          30 dias
+        </div>
+
+        <div class="price">
+          <strong>R$20</strong>
+          <span>/ 30 dias</span>
+        </div>
+
+        <ul>
+          <li>Mais recursos que o Bronze</li>
+          <li>Proteção avançada</li>
+          <li>Mais comandos disponíveis</li>
+          <li>IA e ferramentas extras</li>
+        </ul>
+
+        <a
+          class="plan-button"
+          href="https://wa.me/5598920025496?text=Fiquei%20interessado%20no%20Plano%20Prata.%20Como%20fa%C3%A7o%20para%20contratar%3F"
+          target="_blank"
+          rel="noopener"
+        >
+          Quero o Prata
+        </a>
+
+      </div>
+
+
+      <!-- GOLD -->
+
+      <div class="plan">
+
+        <h3>🥇 Gold</h3>
+
+        <div class="duration">
+          30 dias
+        </div>
+
+        <div class="price">
+          <strong>R$30</strong>
+          <span>/ 30 dias</span>
+        </div>
+
+        <ul>
+          <li>Acesso ao nível máximo</li>
+          <li>Proteção completa</li>
+          <li>Maior quantidade de comandos</li>
+          <li>Recursos exclusivos</li>
+        </ul>
+
+        <a
+          class="plan-button"
+          href="https://wa.me/5598920025496?text=Fiquei%20interessado%20no%20Plano%20Gold.%20Como%20fa%C3%A7o%20para%20contratar%3F"
+          target="_blank"
+          rel="noopener"
+        >
+          Quero o Gold
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ARCADE -->
+
+<section id="arcade">
+
+  <div class="container">
+
+    <div class="section-title">
+      <span>Obsidian Arcade</span>
+      <h2>Jogos para o grupo</h2>
+      <p>Uma coleção de jogos para jogar diretamente pelo Obsidian.</p>
+    </div>
+
+    <div class="games">
+
+      <div class="game">🎮 Velha</div>
+      <div class="game">🐍 Cobrinha</div>
+      <div class="game">🚀 Galaxy</div>
+      <div class="game">👻 Pac-Man</div>
+
+      <div class="game">🎹 Piano</div>
+      <div class="game">🏎️ Racer</div>
+      <div class="game">🃏 Paciência</div>
+      <div class="game">🧠 Memória</div>
+
+      <div class="game">❓ Quiz</div>
+      <div class="game">🔤 Forca</div>
+      <div class="game">♟️ Damas</div>
+      <div class="game">🦖 Dino</div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- CTA -->
+
+<section>
+
+  <div class="container">
+
+    <div class="cta">
+
+      <h2>
+        Pronto para usar o Obsidian?
+      </h2>
+
+      <p>
+        Escolha seu plano e fale diretamente conosco pelo WhatsApp.
+      </p>
+
+      <a href="#planos" class="btn btn-primary">
+        Ver planos
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+  <strong>OBSIDIAN BOT</strong>
+
+  <br><br>
+
+  Seu grupo. Mais poderoso.
+
+  <br><br>
+
+  © 2026 Obsidian Bot. Todos os direitos reservados.
+
+</footer>
+
+
+</body>
+</html>
